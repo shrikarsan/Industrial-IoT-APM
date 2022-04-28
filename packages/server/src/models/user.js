@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
   },
   managedBy: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
 });
 
