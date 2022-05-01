@@ -15,6 +15,22 @@ const machineSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  lastMaintenance: {
+    type: Date,
+  },
+  actuator: [
+    {
+      id: {
+        type: String,
+      },
+      name: {
+        type: String,
+      },
+      active: {
+        type: Boolean,
+      },
+    },
+  ],
 });
 
-module.exports = mongoose.model("Machine", userSchema);
+module.exports = mongoose.model("Machine", machineSchema);
