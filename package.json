@@ -11,7 +11,8 @@
   "scripts": {
     "web": "yarn workspace @industrial-iot-apm/web start",
     "mobile": "yarn workspace @industrial-iot-apm/mobile start",
-    "android": "yarn workspace @industrial-iot-apm/mobile android"
+    "android": "yarn workspace @industrial-iot-apm/mobile android",
+    "server": "yarn workspace @industrial-iot-apm/server server"
   },
   "license": "MIT"
 }
