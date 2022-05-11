@@ -1,9 +1,8 @@
-import './App.css';
+import MainRouter from "./routes/MainRouter";
+import "./App.css";
 
 function App() {
-  return (
-    <h1>Industrial - IoT - Asset Performance Management</h1>
-  );
+  return <MainRouter />;
 }
 
 export default App;
