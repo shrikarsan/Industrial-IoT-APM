@@ -7,8 +7,8 @@ const Login = () => {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: "user@factory.com",
+      password: "12345678",
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -52,7 +52,7 @@ const Login = () => {
                 align="center"
                 // fontFamily="Poppins"
               >
-                Login to your account
+                Login
               </Typography>
             </Box>
             {/* <Box sx={{ my: 3 }}>
