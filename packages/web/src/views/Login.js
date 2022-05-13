@@ -37,7 +37,7 @@ const Login = () => {
       >
         <Box sx={{ my: 8 }}></Box>
         <Container
-          maxWidth="sm"
+          maxWidth="xs"
           sx={{
             bgcolor: "white",
             borderRadius: "10px",
