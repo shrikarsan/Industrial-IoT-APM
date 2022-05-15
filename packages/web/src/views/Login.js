@@ -51,6 +51,7 @@ const Login = () => {
                 variant="h4"
                 align="center"
                 // fontFamily="Poppins"
+                sx={{ fontWeight: "bold" }}
               >
                 Login
               </Typography>
