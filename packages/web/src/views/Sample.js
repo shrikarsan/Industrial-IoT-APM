@@ -3,10 +3,36 @@ import Skeleton from "@mui/material/Skeleton";
 
 const Sample = () => {
   return (
-    <Box>
+    <Box
+      sx={{
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Skeleton />
-      <Skeleton animation="wave" />
-      <Skeleton animation={false} />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
     </Box>
   );
 };
