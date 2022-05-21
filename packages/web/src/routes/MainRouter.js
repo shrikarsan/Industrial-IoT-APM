@@ -13,6 +13,7 @@ const MainRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/machines" element={<Machines />} />
+        <Route path="/machine/:id" element={<Machines />} />
       </Routes>
     </Router>
   );

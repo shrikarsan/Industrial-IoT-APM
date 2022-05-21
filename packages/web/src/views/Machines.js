@@ -7,8 +7,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
 import Layout from "components/Layout";
+import { Typography } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,6 +36,18 @@ const rows = [
 const Machines = () => {
   return (
     <Layout title="Machines">
+      <Typography>List of machines in the factory</Typography>
+      <br />
+      <Button
+        variant="contained"
+        href="machines/add"
+        endIcon={<AddRoundedIcon />}
+        sx={{ backgroundColor: "#0466c8" }}
+      >
+        Add machine
+      </Button>
+      <br />
+      <br />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
           <TableHead>
@@ -57,12 +71,8 @@ const Machines = () => {
                 <TableCell>{row.actuator ? "Present" : "Absent"}</TableCell>
                 <TableCell>{row.status}</TableCell>
                 <TableCell>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    sx={{ textTransform: "none" }}
-                  >
-                    Edit
+                  <Button variant="outlined" sx={{ textTransform: "none" }}>
+                    View
                   </Button>
                 </TableCell>
               </TableRow>

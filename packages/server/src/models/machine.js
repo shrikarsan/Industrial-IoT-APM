@@ -18,7 +18,7 @@ const machineSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["Good", "Warning", "Bad"],
+    enum: ["Good", "Warning", "Danger"],
   },
   supervisedBy: {
     type: mongoose.Schema.Types.ObjectId,
