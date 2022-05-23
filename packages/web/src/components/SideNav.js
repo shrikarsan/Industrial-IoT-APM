@@ -62,7 +62,7 @@ function SideNav(props) {
             disablePadding
             button
             component="a"
-            href={item.path}
+            href={"/" + item.path}
           >
             {"/" + item.path === location.pathname ? (
               <ListItemButton sx={{ backgroundColor: "#e9ecef" }}>

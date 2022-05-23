@@ -9,16 +9,16 @@ const machineSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    enum: ["Good", "Warning", "Danger"],
+  },
   purchasedDate: {
     type: Date,
   },
   noOfSensors: {
     type: Number,
     default: 0,
-  },
-  status: {
-    type: String,
-    enum: ["Good", "Warning", "Danger"],
   },
   supervisedBy: {
     type: mongoose.Schema.Types.ObjectId,
@@ -34,9 +34,6 @@ const machineSchema = new mongoose.Schema({
       },
       name: {
         type: String,
-      },
-      active: {
-        type: Boolean,
       },
     },
   ],
