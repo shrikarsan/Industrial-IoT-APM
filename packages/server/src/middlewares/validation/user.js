@@ -38,3 +38,20 @@ exports.validateUserSignUp = [
       return true;
     }),
 ];
+
+exports.userValidation = (req, res, next) => {
+  const result = validationResult(req).array();
+  if (!result.length) return next();
+
+  const error = result[0].msg;
+  res.json({ success: false, message: error });
+};
+
+exports.validateUserLogin = [
+  check("email").trim().isEmail().withMessage("email / password is required!"),
+  check("password")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("email / password is required!"),
+];
