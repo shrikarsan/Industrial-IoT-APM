@@ -24,14 +24,14 @@ const rows = [
   createData("MC4003", "Compressor Machine", 1, false, "Good"),
 ];
 
-const Machines = () => {
+const Users = () => {
   return (
-    <Layout title="Machines">
-      <Typography>List of machines in the factory</Typography>
+    <Layout title="Users">
+      <Typography>List of users in the factory</Typography>
       <br />
       <Button
         variant="contained"
-        href="machines/add"
+        href="users/add"
         endIcon={<AddRoundedIcon />}
         sx={{ backgroundColor: "#0466c8" }}
       >
@@ -75,4 +75,4 @@ const Machines = () => {
   );
 };
 
-export default Machines;
+export default Users;

@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import PrecisionManufacturingRoundedIcon from "@mui/icons-material/PrecisionManufacturingRounded";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 
 import { useLocation } from "react-router-dom";
 
@@ -29,6 +30,11 @@ function SideNav(props) {
       text: "Machines",
       icon: <PrecisionManufacturingRoundedIcon />,
       path: "machines",
+    },
+    {
+      text: "Users",
+      icon: <PersonRoundedIcon />,
+      path: "users",
     },
     {
       text: "Logout",
