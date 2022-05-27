@@ -1,5 +1,7 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+import { LoginProvider } from "context/Login";
+
 import MainRouter from "routes/MainRouter";
 import "./App.css";
 
@@ -23,9 +25,11 @@ const theme = createTheme({
 function App() {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <MainRouter />
-      </ThemeProvider>
+      <LoginProvider>
+        <ThemeProvider theme={theme}>
+          <MainRouter />
+        </ThemeProvider>
+      </LoginProvider>
     </>
   );
 }

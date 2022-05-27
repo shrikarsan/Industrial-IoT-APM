@@ -4,17 +4,19 @@ const cors = require("cors");
 const chalk = require("chalk");
 const dotenv = require("dotenv");
 
-dotenv.config();
-
 const connectDB = require("./config/db");
-connectDB();
 
+const userRouter = require("./routes/user");
+
+dotenv.config();
+connectDB();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(userRouter);
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
