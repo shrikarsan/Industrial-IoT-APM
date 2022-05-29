@@ -62,6 +62,7 @@ const Users = () => {
             </TableRow>
           </TableHead>
           <TableBody>
+            {/* {allUsers.data.map((row) => ( */}
             {(allUsers !== undefined ? allUsers.data : rows).map((row) => (
               <TableRow key={row.id}>
                 <TableCell component="th" scope="row">
