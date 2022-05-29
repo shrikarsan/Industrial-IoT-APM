@@ -1,6 +1,13 @@
 const { check, validationResult } = require("express-validator");
 
 exports.validateUserSignUp = [
+  check("id")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("ID is required!")
+    .isString()
+    .withMessage("Must be a valid string"),
   check("firstName")
     .trim()
     .not()

@@ -6,6 +6,7 @@ import Dashboard from "views/Dashboard";
 import Machines from "views/Machines";
 import AddMachine from "views/AddMachine";
 import Users from "views/Users";
+import AddUser from "views/AddUser";
 
 const MainRouter = () => {
   return (
@@ -20,7 +21,7 @@ const MainRouter = () => {
         <Route path="/machine/:id" element={<Machines />} />
 
         <Route path="/users" element={<Users />} />
-        <Route path="/users/add" element={<AddMachine />} />
+        <Route path="/users/add" element={<AddUser />} />
         <Route path="/users/:id" element={<Users />} />
       </Routes>
     </Router>

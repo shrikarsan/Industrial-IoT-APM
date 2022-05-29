@@ -1,3 +1,4 @@
+import { useEffect, useContext } from "react";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
@@ -13,18 +14,29 @@ import { Typography } from "@mui/material";
 
 import StyledTableCell from "components/StyledTableCell";
 
-function createData(id, name, noOfSensors, actuator, status) {
-  return { id, name, noOfSensors, actuator, status };
+import { GetUsersContext } from "context/Users";
+
+function createData(id, firstName, lastName, email, role) {
+  return { id, firstName, lastName, email, role };
 }
 
+const rowHeaders = ["User ID", "First Name", "Last Name", "Email", "Role"];
 const rows = [
-  createData("MC1001", "Slotting Machine", 3, true, "Good"),
-  createData("MC3007", "Grinder Machine", 2, false, "Good"),
-  createData("MC6002", "Lathe Machine", 4, true, "Good"),
-  createData("MC4003", "Compressor Machine", 1, false, "Good"),
+  createData("SP001", "David", "Williams", "davidw@ifs.com", "supervisor"),
+  createData("MN002", "John", "Stephen", "johns@ifs.com", "manager"),
+  createData("SP002", "Adam", "Smith", "adams@ifs.com", "supervisor"),
+  createData("SP003", "Mike", "Hudson", "mikeh@ifs.com", "supervisor"),
+  createData("SP006", "Arthur", "Clarke", "arthurc@ifs.com", "supervisor"),
 ];
 
 const Users = () => {
+  const { allUsers, getAllUsers } = useContext(GetUsersContext);
+
+  useEffect(() => {
+    getAllUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Layout title="Users">
       <Typography>List of users in the factory</Typography>
@@ -35,7 +47,7 @@ const Users = () => {
         endIcon={<AddRoundedIcon />}
         sx={{ backgroundColor: "#0466c8" }}
       >
-        Add machine
+        Add User
       </Button>
       <br />
       <br />
@@ -43,24 +55,22 @@ const Users = () => {
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Machine ID</StyledTableCell>
-              <StyledTableCell>Name</StyledTableCell>
-              <StyledTableCell>No of Sensors</StyledTableCell>
-              <StyledTableCell>Actuator</StyledTableCell>
-              <StyledTableCell>Status</StyledTableCell>
+              {rowHeaders.map((item) => (
+                <StyledTableCell>{item}</StyledTableCell>
+              ))}
               <StyledTableCell colSpan={1} />
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {(allUsers !== undefined ? allUsers.data : rows).map((row) => (
               <TableRow key={row.id}>
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.noOfSensors}</TableCell>
-                <TableCell>{row.actuator ? "Present" : "Absent"}</TableCell>
-                <TableCell>{row.status}</TableCell>
+                <TableCell>{row.firstName}</TableCell>
+                <TableCell>{row.lastName}</TableCell>
+                <TableCell>{row.email}</TableCell>
+                <TableCell>{row.role}</TableCell>
                 <TableCell>
                   <Button variant="outlined" sx={{ textTransform: "none" }}>
                     View

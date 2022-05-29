@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
+  id: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   firstName: {
     type: String,
     required: true,
@@ -25,8 +30,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   managedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
   },
 });
 

@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 exports.createUser = async (req, res) => {
-  const { firstName, lastName, email, password, role } = req.body;
+  const { id, firstName, lastName, email, password, role, managedBy } =
+    req.body;
   const isNewUser = await User.isThisEmailInUse(email);
   if (!isNewUser)
     return res.json({
@@ -10,11 +11,13 @@ exports.createUser = async (req, res) => {
       message: "This email is already in use, try login",
     });
   const user = await User({
+    id,
     firstName,
     lastName,
     email,
     password,
     role,
+    managedBy,
   });
   await user.save();
   res.json({ success: true, user });
@@ -82,5 +85,22 @@ exports.logout = async (req, res) => {
 
     await User.findByIdAndUpdate(req.user._id, { tokens: newTokens });
     res.json({ success: true, message: "Sign out successfully!" });
+  }
+};
+
+exports.getUsers = async (req, res, next) => {
+  try {
+    const users = await User.find();
+
+    return res.status(200).json({
+      success: true,
+      count: users.length,
+      data: users,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
   }
 };
