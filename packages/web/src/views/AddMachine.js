@@ -5,15 +5,29 @@ import {
   Button,
   TextField,
   MenuItem,
-  // Autocomplete,
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
 
 import Layout from "components/Layout";
+import client from "api/client";
 
 const AddMachine = () => {
   const navigate = useNavigate();
+
+  const createMachine = async (values, formikActions) => {
+    const res = await client.post("/create-machine", {
+      ...values,
+    });
+
+    if (res.data.success) {
+      console.log("User created successfully");
+    }
+
+    formikActions.resetForm();
+    formikActions.setSubmitting(false);
+  };
+
   const formik = useFormik({
     initialValues: {
       id: "",
@@ -22,23 +36,24 @@ const AddMachine = () => {
       purchasedDate: "",
       lastMaintenance: "",
       isActuatorPresent: false,
-      actuatorid: "",
-      actuatorname: "",
+      actuatorId: "",
+      actuatorName: "",
     },
     validationSchema: Yup.object({
       id: Yup.string().required("ID is required"),
       name: Yup.string().required("Name is required"),
       isActuatorPresent: Yup.boolean(),
-      actuatorid: Yup.string().when("isActuatorPresent", {
+      actuatorId: Yup.string().when("isActuatorPresent", {
         is: true,
         then: Yup.string().required("Actuator ID is required"),
       }),
-      actuatorname: Yup.string().when("isActuatorPresent", {
+      actuatorName: Yup.string().when("isActuatorPresent", {
         is: true,
         then: Yup.string().required("Actuator name is required"),
       }),
     }),
-    onSubmit: () => {
+    onSubmit: (values, formikActions) => {
+      createMachine(values, formikActions);
       navigate("/machines");
     },
   });
@@ -99,15 +114,6 @@ const AddMachine = () => {
               </MenuItem>
             ))}
           </TextField>
-          {/* <br />
-        <br />
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={["Good", "Warning", "Danger"]}
-          sx={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="Status" />}
-        /> */}
           <br />
           <br />
           <TextField
@@ -181,18 +187,18 @@ const AddMachine = () => {
               <br />
               <TextField
                 error={Boolean(
-                  formik.touched.actuatorid && formik.errors.actuatorid
+                  formik.touched.actuatorId && formik.errors.actuatorId
                 )}
                 helperText={
-                  formik.touched.actuatorid && formik.errors.actuatorid
+                  formik.touched.actuatorId && formik.errors.actuatorId
                 }
                 label="Actuator ID *"
                 margin="normal"
-                name="actuatorid"
+                name="actuatorId"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 type="text"
-                value={formik.values.actuatorid}
+                value={formik.values.actuatorId}
                 variant="outlined"
                 sx={{ minWidth: "400px" }}
               />
@@ -200,18 +206,18 @@ const AddMachine = () => {
 
               <TextField
                 error={Boolean(
-                  formik.touched.actuatorname && formik.errors.actuatorname
+                  formik.touched.actuatorName && formik.errors.actuatorName
                 )}
                 helperText={
-                  formik.touched.actuatorname && formik.errors.actuatorname
+                  formik.touched.actuatorName && formik.errors.actuatorName
                 }
                 label="Actuator Name *"
                 margin="normal"
-                name="actuatorname"
+                name="actuatorName"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 type="text"
-                value={formik.values.actuatorname}
+                value={formik.values.actuatorName}
                 variant="outlined"
                 sx={{ minWidth: "400px" }}
               />

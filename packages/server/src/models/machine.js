@@ -21,22 +21,18 @@ const machineSchema = new mongoose.Schema({
     default: 0,
   },
   supervisedBy: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "User",
   },
   lastMaintenance: {
     type: Date,
   },
-  actuator: [
-    {
-      id: {
-        type: String,
-      },
-      name: {
-        type: String,
-      },
-    },
-  ],
+  actuatorId: {
+    type: String,
+  },
+  actuatorName: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Machine", machineSchema);
