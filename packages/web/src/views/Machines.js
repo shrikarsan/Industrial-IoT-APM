@@ -52,35 +52,37 @@ const Machines = () => {
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Machine ID</StyledTableCell>
-              <StyledTableCell>Name</StyledTableCell>
-              <StyledTableCell>No of Sensors</StyledTableCell>
-              <StyledTableCell>Actuator</StyledTableCell>
-              <StyledTableCell>Status</StyledTableCell>
+              {[
+                "Machine ID",
+                "Name",
+                "No of Sensors",
+                "Actuator",
+                "Status",
+              ].map((item) => (
+                <StyledTableCell>{item}</StyledTableCell>
+              ))}
               <StyledTableCell colSpan={1} />
             </TableRow>
           </TableHead>
           <TableBody>
-            {(allMachines !== undefined ? allMachines.data : rows).map(
-              (row) => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.id}
-                  </TableCell>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.noOfSensors}</TableCell>
-                  <TableCell>
-                    {row.actuatorId !== undefined ? "Present" : "Absent"}
-                  </TableCell>
-                  <TableCell>{row.status}</TableCell>
-                  <TableCell>
-                    <Button variant="outlined" sx={{ textTransform: "none" }}>
-                      View
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              )
-            )}
+            {(allMachines !== undefined ? allMachines.data : []).map((row) => (
+              <TableRow key={row.id}>
+                <TableCell component="th" scope="row">
+                  {row.id}
+                </TableCell>
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.noOfSensors}</TableCell>
+                <TableCell>
+                  {row.actuatorId !== undefined ? "Present" : "Absent"}
+                </TableCell>
+                <TableCell>{row.status}</TableCell>
+                <TableCell>
+                  <Button variant="outlined" sx={{ textTransform: "none" }}>
+                    View
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

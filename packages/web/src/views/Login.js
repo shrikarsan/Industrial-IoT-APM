@@ -7,8 +7,8 @@ const Login = () => {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      email: "user@factory.com",
-      password: "12345678",
+      email: "",
+      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string()
