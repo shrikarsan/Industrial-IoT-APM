@@ -14,26 +14,22 @@ exports.validateUserSignUp = [
     .isEmpty()
     .withMessage("First Name is required!")
     .isString()
-    .withMessage("Must be a valid name!")
-    .isLength({ min: 3, max: 20 })
-    .withMessage("Name must be within 3 to 20 character!"),
+    .withMessage("Must be a valid name!"),
   check("lastName")
     .trim()
     .not()
     .isEmpty()
     .withMessage("Last Name is required!")
     .isString()
-    .withMessage("Must be a valid name!")
-    .isLength({ min: 3, max: 20 })
-    .withMessage("Name must be within 3 to 20 character!"),
+    .withMessage("Must be a valid name!"),
   check("email").normalizeEmail().isEmail().withMessage("Invalid email!"),
   check("password")
     .trim()
     .not()
     .isEmpty()
     .withMessage("Password is empty!")
-    .isLength({ min: 8, max: 20 })
-    .withMessage("Password must be 8 to 20 characters long!"),
+    .isLength({ min: 8 })
+    .withMessage("Password must be 8 characters at least!"),
   check("confirmPassword")
     .trim()
     .not()
@@ -55,10 +51,6 @@ exports.userValidation = (req, res, next) => {
 };
 
 exports.validateUserLogin = [
-  check("email").trim().isEmail().withMessage("email / password is required!"),
-  check("password")
-    .trim()
-    .not()
-    .isEmpty()
-    .withMessage("email / password is required!"),
+  check("email").trim().isEmail().withMessage("email is required!"),
+  check("password").trim().not().isEmpty().withMessage("password is required!"),
 ];

@@ -37,6 +37,7 @@ const Machines = () => {
   return (
     <Layout title="Machines">
       <Typography>List of machines in the factory</Typography>
+
       <br />
       <Button
         variant="contained"
