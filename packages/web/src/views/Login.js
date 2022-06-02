@@ -1,10 +1,46 @@
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  Alert,
+} from "@mui/material";
+
+import { useLogin } from "context/Login";
+import client from "api/client";
 
 const Login = () => {
+  const { setIsLoggedIn, setProfile } = useLogin();
   const navigate = useNavigate();
+
+  const loginUser = async (values, formikActions) => {
+    try {
+      const res = await client.post("/login", {
+        ...values,
+      });
+
+      if (res.data.success) {
+        setProfile(res.data.user);
+        setIsLoggedIn(true);
+        console.log(res.data);
+        formikActions.resetForm();
+        navigate("/dashboard");
+      } else {
+        formikActions.setSubmitting(false);
+        formikActions.setErrors({
+          email: "Invalid email or password",
+          password: "Invalid email or password",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -13,12 +49,13 @@ const Login = () => {
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Must be a valid email")
-        .max(255)
         .required("Email is required"),
-      password: Yup.string().max(255).required("Password is required"),
+      password: Yup.string()
+        .min(8, "Should contain at least 8 characters")
+        .required("Password is required"),
     }),
-    onSubmit: () => {
-      navigate("/dashboard");
+    onSubmit: (values, formikActions) => {
+      loginUser(values, formikActions);
     },
   });
 
@@ -56,11 +93,6 @@ const Login = () => {
                 Login
               </Typography>
             </Box>
-            {/* <Box sx={{ my: 3 }}>
-              <Typography color="textPrimary" variant="h6">
-                Login to your account
-              </Typography>
-            </Box> */}
 
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
