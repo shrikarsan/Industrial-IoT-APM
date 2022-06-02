@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import { useLogin } from "context/Login";
 
@@ -10,7 +15,16 @@ import AddMachine from "views/AddMachine";
 import Users from "views/Users";
 import AddUser from "views/AddUser";
 
-const LoggedInRouter = () => {
+export const ProtectedRoute = ({ children }) => {
+  const { isLoggedIn } = useLogin();
+  if (!isLoggedIn) {
+    // user is not authenticated
+    return <Navigate to="/login" />;
+  }
+  return children;
+};
+
+const MainRouter = () => {
   return (
     <Router>
       <Routes>
@@ -28,21 +42,6 @@ const LoggedInRouter = () => {
       </Routes>
     </Router>
   );
-};
-
-const NotLoggedInRouter = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-      </Routes>
-    </Router>
-  );
-};
-
-const MainRouter = () => {
-  const { isLoggedIn } = useLogin();
-  return isLoggedIn ? <LoggedInRouter /> : <NotLoggedInRouter />;
 };
 
 export default MainRouter;
