@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import { useLogin } from "context/Login";
+
 import Sample from "views/Sample";
 import Login from "views/Login";
 import Dashboard from "views/Dashboard";
@@ -8,7 +10,7 @@ import AddMachine from "views/AddMachine";
 import Users from "views/Users";
 import AddUser from "views/AddUser";
 
-const MainRouter = () => {
+const LoggedInRouter = () => {
   return (
     <Router>
       <Routes>
@@ -26,6 +28,21 @@ const MainRouter = () => {
       </Routes>
     </Router>
   );
+};
+
+const NotLoggedInRouter = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+      </Routes>
+    </Router>
+  );
+};
+
+const MainRouter = () => {
+  const { isLoggedIn } = useLogin();
+  return isLoggedIn ? <LoggedInRouter /> : <NotLoggedInRouter />;
 };
 
 export default MainRouter;
