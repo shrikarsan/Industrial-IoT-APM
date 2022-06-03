@@ -21,7 +21,7 @@ const AddMachine = () => {
     });
 
     if (res.data.success) {
-      console.log("User created successfully");
+      console.log("Machine created successfully");
     }
 
     formikActions.resetForm();
