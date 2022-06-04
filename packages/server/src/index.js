@@ -8,6 +8,7 @@ const connectDB = require("./config/db");
 
 const userRouter = require("./routes/user");
 const machineRouter = require("./routes/machine");
+const sensorRouter = require("./routes/sensor");
 
 dotenv.config();
 connectDB();
@@ -17,8 +18,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
 app.use(userRouter);
 app.use(machineRouter);
+app.use(sensorRouter);
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));

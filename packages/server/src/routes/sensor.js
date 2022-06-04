@@ -1,12 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const {
-  getSensors,
-  addSensor,
-  deleteSensor,
-} = require("../controllers/sensor");
 
-router.route("/sensor").get(getSensors).post(addSensor);
-router.route("/sensor/:id").delete(deleteSensor);
+const { createSensor, getSensors } = require("../controllers/sensor");
+
+router.get("/sensors", getSensors);
+router.post("/create-sensor", createSensor);
 
 module.exports = router;

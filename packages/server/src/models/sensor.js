@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const sensorSchema = new mongoose.Schema({
+  id: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -11,24 +15,14 @@ const sensorSchema = new mongoose.Schema({
   unit: {
     type: String,
   },
-  upperThreshold: {
-    value: {
-      type: Number,
-    },
-    durationInMinutes: {
-      type: Number,
-    },
+  upperThresholdValue: {
+    type: Number,
   },
-  lowerThreshold: {
-    value: {
-      type: Number,
-    },
-    durationInMinutes: {
-      type: Number,
-    },
+  lowerThresholdValue: {
+    type: Number,
   },
-  machine: {
-    type: mongoose.Schema.Types.ObjectId,
+  machineId: {
+    type: String,
     ref: "Machine",
   },
 });

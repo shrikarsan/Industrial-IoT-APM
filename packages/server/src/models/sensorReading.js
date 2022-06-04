@@ -12,7 +12,7 @@ const sensorReadingSchema = new mongoose.Schema({
     type: String,
   },
   sensor: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "Sensor",
   },
 });
