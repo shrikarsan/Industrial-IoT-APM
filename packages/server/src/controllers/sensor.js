@@ -1,4 +1,5 @@
 const Sensor = require("../models/sensor");
+const Machine = require("../models/machine");
 
 exports.createSensor = async (req, res) => {
   const {
@@ -22,6 +23,11 @@ exports.createSensor = async (req, res) => {
   });
   await sensor.save();
   res.json({ success: true, sensor });
+
+  await Machine.findOneAndUpdate(
+    { id: machineId },
+    { $inc: { noOfSensors: 1 } }
+  );
 };
 
 exports.getSensors = async (req, res, next) => {

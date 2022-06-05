@@ -15,6 +15,9 @@ const sensorSchema = new mongoose.Schema({
   unit: {
     type: String,
   },
+  currentValue: {
+    type: Number,
+  },
   upperThresholdValue: {
     type: Number,
   },

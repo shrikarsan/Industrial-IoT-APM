@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { LoginProvider } from "context/Login";
 import { GetUsersContextProvider } from "context/Users";
 import { GetMachinesContextProvider } from "context/Machines";
+import { GetSensorsContextProvider } from "context/Sensors";
 
 import MainRouter from "routes/MainRouter";
 import "./App.css";
@@ -30,9 +31,11 @@ function App() {
       <LoginProvider>
         <GetUsersContextProvider>
           <GetMachinesContextProvider>
-            <ThemeProvider theme={theme}>
-              <MainRouter />
-            </ThemeProvider>
+            <GetSensorsContextProvider>
+              <ThemeProvider theme={theme}>
+                <MainRouter />
+              </ThemeProvider>
+            </GetSensorsContextProvider>
           </GetMachinesContextProvider>
         </GetUsersContextProvider>
       </LoginProvider>
