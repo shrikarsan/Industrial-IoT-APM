@@ -196,15 +196,7 @@ const AddUser = () => {
                 value={formik.values.managedBy}
                 variant="outlined"
                 sx={{ minWidth: "400px" }}
-                id="outlined-select-managedBy"
-                select
-              >
-                {["MN001", "MN002", "MN003"].map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
+              />
             </>
           ) : (
             ""
