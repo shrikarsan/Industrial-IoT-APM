@@ -42,11 +42,6 @@ function SideNav(props) {
       icon: <SensorsRoundedIcon />,
       path: "sensors",
     },
-    {
-      text: "Sample",
-      icon: <MailIcon />,
-      path: "/",
-    },
   ];
   const drawer = (
     <div>
