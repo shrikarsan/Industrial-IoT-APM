@@ -4,6 +4,7 @@ import { LoginProvider } from "context/Login";
 import { GetUsersContextProvider } from "context/Users";
 import { GetMachinesContextProvider } from "context/Machines";
 import { GetSensorsContextProvider } from "context/Sensors";
+import { GetSensorReadingsContextProvider } from "context/SensorReadings";
 
 import MainRouter from "routes/MainRouter";
 import "./App.css";
@@ -32,9 +33,11 @@ function App() {
         <GetUsersContextProvider>
           <GetMachinesContextProvider>
             <GetSensorsContextProvider>
-              <ThemeProvider theme={theme}>
-                <MainRouter />
-              </ThemeProvider>
+              <GetSensorReadingsContextProvider>
+                <ThemeProvider theme={theme}>
+                  <MainRouter />
+                </ThemeProvider>
+              </GetSensorReadingsContextProvider>
             </GetSensorsContextProvider>
           </GetMachinesContextProvider>
         </GetUsersContextProvider>

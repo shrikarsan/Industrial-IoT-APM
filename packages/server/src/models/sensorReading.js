@@ -17,6 +17,10 @@ const sensorReadingSchema = new mongoose.Schema(
       type: String,
       ref: "Sensor",
     },
+    machineId: {
+      type: String,
+      ref: "Machine",
+    },
   },
   {
     timestamps: true,

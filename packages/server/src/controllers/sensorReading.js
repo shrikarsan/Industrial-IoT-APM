@@ -1,32 +1,55 @@
 const SensorReading = require("../models/sensorReading");
 const Sensor = require("../models/sensor");
 const Machine = require("../models/machine");
+const Alert = require("../models/alert");
 
 exports.createSensorReading = async (req, res) => {
   const { value, unit, time, sensorId } = req.body;
+
+  const sensor = await Sensor.findOne({ id: sensorId });
 
   const sensorReading = await SensorReading({
     value,
     unit,
     time,
     sensorId,
+    machineId: sensor.machineId,
   });
   await sensorReading.save();
   res.json({ success: true, sensorReading });
 
-  const sensor = await Sensor.findOne({ id: sensorId });
-
   if (sensor.upperThresholdValue && value > sensor.upperThresholdValue) {
+    const alert = await Alert({
+      time: time,
+      description: `Current reading ${value} ${unit} of sensor ${sensorId} has exceeded the upper threshold value of ${sensor.upperThresholdValue}`,
+      sensor: sensorId,
+      machine: sensor.machineId,
+      reading: sensorReading._id,
+    });
+    await alert.save();
+
     await Machine.findOneAndUpdate(
       { id: sensor.machineId },
       { $set: { status: "Warning" } }
     );
-  }
+  } else if (sensor.lowerThresholdValue && value < sensor.lowerThresholdValue) {
+    const alert = await Alert({
+      time: time,
+      description: `Current reading ${value} ${unit} of sensor ${sensorId} is less than the lower threshold value of ${sensor.lowerThresholdValue}`,
+      sensor: sensorId,
+      machine: sensor.machineId,
+      reading: sensorReading._id,
+    });
+    await alert.save();
 
-  if (sensor.lowerThresholdValue && value < sensor.lowerThresholdValue) {
     await Machine.findOneAndUpdate(
       { id: sensor.machineId },
       { $set: { status: "Warning" } }
+    );
+  } else {
+    await Machine.findOneAndUpdate(
+      { id: sensor.machineId },
+      { $set: { status: "Good" } }
     );
   }
 
@@ -35,7 +58,7 @@ exports.createSensorReading = async (req, res) => {
 
 exports.getAllSensorReadings = async (req, res, next) => {
   try {
-    const sensorReadings = await SensorReading.find();
+    const sensorReadings = await SensorReading.find().sort({ time: -1 });
 
     return res.status(200).json({
       success: true,

@@ -8,8 +8,12 @@ const alertSchema = new mongoose.Schema({
     type: String,
   },
   sensor: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "Sensor",
+  },
+  machine: {
+    type: String,
+    ref: "Machine",
   },
   reading: {
     type: mongoose.Schema.Types.ObjectId,
