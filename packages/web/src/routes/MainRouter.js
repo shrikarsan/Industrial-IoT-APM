@@ -16,6 +16,8 @@ import Users from "views/Users";
 import AddUser from "views/AddUser";
 import Sensors from "views/Sensors";
 import AddSensor from "views/AddSensor";
+import Alerts from "views/Alerts";
+import SensorReadings from "views/SensorReadings";
 
 export const ProtectedRoute = ({ children }) => {
   const { isLoggedIn } = useLogin();
@@ -45,6 +47,9 @@ const MainRouter = () => {
         <Route path="/sensors" element={<Sensors />} />
         <Route path="/sensors/add" element={<AddSensor />} />
         <Route path="/sensor/:id" element={<Sensors />} />
+
+        <Route path="/readings" element={<SensorReadings />} />
+        <Route path="/alerts" element={<Alerts />} />
       </Routes>
     </Router>
   );

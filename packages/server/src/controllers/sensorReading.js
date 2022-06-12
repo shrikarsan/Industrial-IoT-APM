@@ -72,3 +72,20 @@ exports.getAllSensorReadings = async (req, res, next) => {
     });
   }
 };
+
+exports.getAllAlerts = async (req, res, next) => {
+  try {
+    const alerts = await Alert.find().sort({ time: -1 });
+
+    return res.status(200).json({
+      success: true,
+      count: alerts.length,
+      data: alerts,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};

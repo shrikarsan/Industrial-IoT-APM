@@ -5,6 +5,7 @@ export const GetSensorReadingsContext = createContext();
 
 export const GetSensorReadingsContextProvider = function (props) {
   const [allSensorReadings, setAllSensorReadings] = useState();
+  const [allAlerts, setAllAlerts] = useState();
 
   const getAllSensorReadings = async () => {
     await client
@@ -17,11 +18,24 @@ export const GetSensorReadingsContextProvider = function (props) {
       });
   };
 
+  const getAllAlerts = async () => {
+    await client
+      .get("/alerts")
+      .then((response) => {
+        setAllAlerts(response.data);
+      })
+      .catch((err) => {
+        console.log("Unable to get all alerts");
+      });
+  };
+
   return (
     <GetSensorReadingsContext.Provider
       value={{
         allSensorReadings,
         getAllSensorReadings,
+        allAlerts,
+        getAllAlerts,
       }}
     >
       {props.children}

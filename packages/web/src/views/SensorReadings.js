@@ -6,10 +6,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Button from "@mui/material/Button";
-import SensorsRoundedIcon from "@mui/icons-material/SensorsRounded";
 
 import Layout from "components/Layout";
 import { Typography } from "@mui/material";
@@ -17,35 +13,19 @@ import { Typography } from "@mui/material";
 import StyledTableCell from "components/StyledTableCell";
 import { GetSensorReadingsContext } from "context/SensorReadings";
 
-const Dashboard = () => {
-  const { allSensorReadings, getAllSensorReadings, allAlerts, getAllAlerts } =
-    useContext(GetSensorReadingsContext);
+const SensorReadings = () => {
+  const { allSensorReadings, getAllSensorReadings } = useContext(
+    GetSensorReadingsContext
+  );
 
   useEffect(() => {
     getAllSensorReadings();
-    getAllAlerts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Layout title="Dashboard">
-      <Typography sx={{ fontWeight: "bold" }}>Recent Alerts</Typography>
-      <br />
-
-      {(allAlerts !== undefined ? allAlerts.data.slice(0, 5) : []).map(
-        (alert) => (
-          <Alert severity="warning">
-            <AlertTitle>Warning - {alert.machine}</AlertTitle>
-            {alert.description} in machine {alert.machine}
-          </Alert>
-        )
-      )}
-      <br />
-      <br />
-
-      <Typography sx={{ fontWeight: "bold" }}>
-        Recent sensor readings
-      </Typography>
+    <Layout title="Sensor Readings">
+      <Typography>All sensor readings</Typography>
       <br />
 
       <TableContainer component={Paper}>
@@ -66,7 +46,7 @@ const Dashboard = () => {
           </TableHead>
           <TableBody>
             {(allSensorReadings !== undefined
-              ? allSensorReadings.data.slice(0, 10)
+              ? allSensorReadings.data
               : []
             ).map((row) => (
               <TableRow key={row._id}>
@@ -83,17 +63,8 @@ const Dashboard = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <br />
-      <Button
-        variant="contained"
-        href="readings"
-        startIcon={<SensorsRoundedIcon />}
-        sx={{ textTransform: "none" }}
-      >
-        View all sensor readings
-      </Button>
     </Layout>
   );
 };
 
-export default Dashboard;
+export default SensorReadings;

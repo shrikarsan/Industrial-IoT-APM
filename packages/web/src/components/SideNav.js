@@ -8,7 +8,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
@@ -16,6 +15,7 @@ import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import PrecisionManufacturingRoundedIcon from "@mui/icons-material/PrecisionManufacturingRounded";
 import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
 import SensorsRoundedIcon from "@mui/icons-material/SensorsRounded";
+import ErrorRoundedIcon from "@mui/icons-material/ErrorRounded";
 
 import { useLocation } from "react-router-dom";
 
@@ -26,6 +26,11 @@ function SideNav(props) {
       text: "Dashboard",
       icon: <DashboardRoundedIcon />,
       path: "dashboard",
+    },
+    {
+      text: "Alerts",
+      icon: <ErrorRoundedIcon />,
+      path: "alerts",
     },
     {
       text: "Users",
