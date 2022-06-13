@@ -32,7 +32,7 @@ const MainRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Sample />} />
+        <Route exact path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
 
