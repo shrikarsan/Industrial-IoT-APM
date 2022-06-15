@@ -38,13 +38,13 @@ export default function Header(props) {
           >
             {props.title}
           </Typography>
-          <Button
+          {/* <Button
             variant="contained"
             href="login"
             sx={{ backgroundColor: "#0466c8", textTransform: "none" }}
           >
             Login
-          </Button>
+          </Button> */}
         </Toolbar>
       </AppBar>
     </Box>
