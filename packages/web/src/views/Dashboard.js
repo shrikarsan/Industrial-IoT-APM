@@ -1,4 +1,4 @@
-import { useEffect, useContext, Fragment } from "react";
+import { useEffect, useContext } from "react";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
@@ -11,13 +11,11 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Button from "@mui/material/Button";
 import EqualizerRoundedIcon from "@mui/icons-material/EqualizerRounded";
 import { Typography, Card, Box, Grid } from "@mui/material";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 
 import PrecisionManufacturingRoundedIcon from "@mui/icons-material/PrecisionManufacturingRounded";
 import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
 import SensorsRoundedIcon from "@mui/icons-material/SensorsRounded";
-import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 
 import Layout from "components/Layout";
 import StyledTableCell from "components/StyledTableCell";
