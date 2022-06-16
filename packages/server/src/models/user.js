@@ -32,6 +32,18 @@ const userSchema = new mongoose.Schema({
   managedBy: {
     type: String,
   },
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
+      signedAt: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
 userSchema.pre("save", function (next) {

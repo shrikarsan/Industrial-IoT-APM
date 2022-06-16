@@ -95,10 +95,13 @@ const Dashboard = () => {
 
       {(allAlerts !== undefined ? allAlerts.data.slice(0, 5) : []).map(
         (alert) => (
-          <Alert severity="warning">
-            <AlertTitle>Warning - {alert.machine}</AlertTitle>
-            {alert.description} in machine {alert.machine}
-          </Alert>
+          <>
+            <Alert severity="warning">
+              <AlertTitle>Warning - {alert.machine}</AlertTitle>
+              {alert.description} in machine {alert.machine}
+            </Alert>
+            <br />
+          </>
         )
       )}
       <br />
