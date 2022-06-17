@@ -30,7 +30,7 @@ exports.createSensor = async (req, res) => {
   );
 };
 
-exports.getSensors = async (req, res, next) => {
+exports.getAllSensors = async (req, res, next) => {
   try {
     const sensors = await Sensor.find();
 
@@ -39,6 +39,57 @@ exports.getSensors = async (req, res, next) => {
       count: sensors.length,
       data: sensors,
     });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
+
+exports.getSensor = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const sensor = await Sensor.findOne({ id: id });
+
+    return res.status(200).json({
+      success: true,
+      data: sensor,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
+
+exports.updateSensor = async (req, res, next) => {
+  const {
+    id,
+    name,
+    type,
+    unit,
+    upperThresholdValue,
+    lowerThresholdValue,
+    machineId,
+  } = req.body;
+
+  try {
+    const sensor = await Sensor.findOneAndUpdate(
+      { id: id },
+      {
+        id: id,
+        name: name,
+        type: type,
+        unit: unit,
+        upperThresholdValue: upperThresholdValue,
+        lowerThresholdValue: lowerThresholdValue,
+        machineId: machineId,
+      },
+      { new: true }
+    );
+    return res.status(200).json({ success: true, data: sensor });
   } catch (err) {
     return res.status(500).json({
       success: false,
