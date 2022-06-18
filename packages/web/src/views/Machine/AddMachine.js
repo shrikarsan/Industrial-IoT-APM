@@ -7,6 +7,7 @@ import {
   MenuItem,
   FormControlLabel,
   Checkbox,
+  Typography,
 } from "@mui/material";
 
 import Layout from "components/Layout";
@@ -40,8 +41,21 @@ const AddMachine = () => {
       actuatorName: "",
     },
     validationSchema: Yup.object({
-      id: Yup.string().required("ID is required"),
+      id: Yup.string()
+        .min(6, "ID should contain at least 6 characters")
+        .required("ID is required"),
       name: Yup.string().required("Name is required"),
+      status: Yup.string().required("Status is required"),
+      purchasedDate: Yup.date().max(
+        new Date(),
+        "Purchased date cannot be in the future"
+      ),
+      lastMaintenance: Yup.date()
+        .min(
+          Yup.ref("purchasedDate"),
+          "Maintenance date cannot be before purchased date"
+        )
+        .max(new Date(), "Maintenance date cannot be in the future"),
       isActuatorPresent: Yup.boolean(),
       actuatorId: Yup.string().when("isActuatorPresent", {
         is: true,
@@ -62,6 +76,9 @@ const AddMachine = () => {
     <Layout title="Add Machine">
       <div style={{ display: "flex", justifyContent: "center" }}>
         <form onSubmit={formik.handleSubmit}>
+          <Typography sx={{ color: "#e5383b" }}>
+            Machine ID cannot be updated later
+          </Typography>
           <TextField
             error={Boolean(formik.touched.id && formik.errors.id)}
             helperText={formik.touched.id && formik.errors.id}

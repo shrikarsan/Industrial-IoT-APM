@@ -14,6 +14,7 @@ import { Typography } from "@mui/material";
 
 import StyledTableCell from "components/StyledTableCell";
 import { GetMachinesContext } from "context/Machines";
+import { useNavigate } from "react-router-dom";
 
 function createData(id, name, noOfSensors, actuatorId, status) {
   return { id, name, noOfSensors, actuatorId, status };
@@ -27,6 +28,7 @@ const rows = [
 ];
 
 const Machines = () => {
+  const navigate = useNavigate();
   const { allMachines, getAllMachines } = useContext(GetMachinesContext);
 
   useEffect(() => {
@@ -78,7 +80,11 @@ const Machines = () => {
                 </TableCell>
                 <TableCell>{row.status}</TableCell>
                 <TableCell>
-                  <Button variant="outlined" sx={{ textTransform: "none" }}>
+                  <Button
+                    variant="outlined"
+                    sx={{ textTransform: "none" }}
+                    onClick={() => navigate(`/machine/${row.id}`)}
+                  >
                     View
                   </Button>
                 </TableCell>
