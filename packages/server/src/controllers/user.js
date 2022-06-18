@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
 exports.createUser = async (req, res) => {
@@ -88,7 +89,7 @@ exports.logout = async (req, res) => {
   }
 };
 
-exports.getUsers = async (req, res, next) => {
+exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find();
 
@@ -97,6 +98,75 @@ exports.getUsers = async (req, res, next) => {
       count: users.length,
       data: users,
     });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
+
+exports.getUser = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findOne({ id: id });
+
+    return res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
+
+exports.updateUser = async (req, res, next) => {
+  const {
+    id,
+    firstName,
+    lastName,
+    email,
+    setNewPassword,
+    password,
+    role,
+    managedBy,
+  } = req.body;
+
+  try {
+    if (setNewPassword) {
+      const hash = await bcrypt.hash(password, 8);
+      const user = await User.findOneAndUpdate(
+        { id: id },
+        {
+          id,
+          firstName,
+          lastName,
+          email,
+          password: hash,
+          role,
+          managedBy,
+        },
+        { new: true }
+      );
+      return res.status(200).json({ success: true, data: user });
+    } else {
+      const user = await User.findOneAndUpdate(
+        { id: id },
+        {
+          id,
+          firstName,
+          lastName,
+          email,
+          role,
+          managedBy,
+        },
+        { new: true }
+      );
+      return res.status(200).json({ success: true, data: user });
+    }
   } catch (err) {
     return res.status(500).json({
       success: false,

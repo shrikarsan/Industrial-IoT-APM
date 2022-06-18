@@ -5,7 +5,9 @@ const {
   createUser,
   userLogin,
   logout,
-  getUsers,
+  getAllUsers,
+  getUser,
+  updateUser,
 } = require("../controllers/user");
 const { isAuth } = require("../middlewares/auth");
 const {
@@ -14,8 +16,11 @@ const {
   validateUserLogin,
 } = require("../middlewares/validation/user");
 
-router.get("/users", getUsers);
+router.get("/users", getAllUsers);
+router.get("/user/:id", getUser);
+router.put("/users", updateUser);
 router.post("/create-user", validateUserSignUp, userValidation, createUser);
+
 router.post("/login", validateUserLogin, userValidation, userLogin);
 router.post("/logout", isAuth, logout);
 
