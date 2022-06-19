@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { Box, Button, Container, Grid, Paper, Typography } from "@mui/material";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import StyledTableCell from "components/StyledTableCell";
+import {
+  Button,
+  Paper,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from "@mui/material";
+
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 
 import Layout from "components/Layout";
@@ -22,6 +25,7 @@ const User = () => {
     getUser(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const getUser = async (userId) => {
     try {
       const res = await client.get(`/user/${userId}`);
