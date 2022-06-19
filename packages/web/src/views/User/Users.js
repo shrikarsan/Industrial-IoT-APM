@@ -15,6 +15,7 @@ import { Typography } from "@mui/material";
 import StyledTableCell from "components/StyledTableCell";
 
 import { GetUsersContext } from "context/Users";
+import { useNavigate } from "react-router-dom";
 
 function createData(id, firstName, lastName, email, role) {
   return { id, firstName, lastName, email, role };
@@ -30,6 +31,7 @@ const rows = [
 ];
 
 const Users = () => {
+  const navigate = useNavigate();
   const { allUsers, getAllUsers } = useContext(GetUsersContext);
 
   useEffect(() => {
@@ -72,7 +74,11 @@ const Users = () => {
                 <TableCell>{row.email}</TableCell>
                 <TableCell>{row.role}</TableCell>
                 <TableCell>
-                  <Button variant="outlined" sx={{ textTransform: "none" }}>
+                  <Button
+                    variant="outlined"
+                    sx={{ textTransform: "none" }}
+                    onClick={() => navigate(`/user/${row.id}`)}
+                  >
                     View
                   </Button>
                 </TableCell>

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Button, TextField, MenuItem } from "@mui/material";
+import { Button, TextField, MenuItem, Typography } from "@mui/material";
 
 import Layout from "components/Layout";
 import client from "api/client";
@@ -34,7 +34,9 @@ const AddUser = () => {
       managedBy: "",
     },
     validationSchema: Yup.object({
-      id: Yup.string().required("User ID is required"),
+      id: Yup.string()
+        .min(5, "ID should contain at least 5 characters")
+        .required("User ID is required"),
       firstName: Yup.string().required("First Name is required"),
       lastName: Yup.string().required("Last Name is required"),
       email: Yup.string().email("Invalid email!").required("Email is required"),
@@ -62,6 +64,9 @@ const AddUser = () => {
     <Layout title="Add User">
       <div style={{ display: "flex", justifyContent: "center" }}>
         <form onSubmit={formik.handleSubmit}>
+          <Typography sx={{ color: "#e5383b" }}>
+            User ID cannot be updated later
+          </Typography>
           <TextField
             error={Boolean(formik.touched.id && formik.errors.id)}
             helperText={formik.touched.id && formik.errors.id}

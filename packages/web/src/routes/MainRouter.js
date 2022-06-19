@@ -7,15 +7,26 @@ import {
 
 import { useLogin } from "context/Login";
 
-import Sample from "views/Sample";
+// import Sample from "views/Sample";
+
 import Login from "views/Login";
 import Dashboard from "views/Dashboard";
-import Machines from "views/Machines";
-import AddMachine from "views/AddMachine";
-import Users from "views/Users";
-import AddUser from "views/AddUser";
-import Sensors from "views/Sensors";
-import AddSensor from "views/AddSensor";
+
+import Users from "views/User/Users";
+import AddUser from "views/User/AddUser";
+import UpdateUser from "views/User/UpdateUser";
+import User from "views/User/User";
+
+import Machines from "views/Machine/Machines";
+import AddMachine from "views/Machine/AddMachine";
+import UpdateMachine from "views/Machine/UpdateMachine";
+import Machine from "views/Machine/Machine";
+
+import Sensors from "views/Sensor/Sensors";
+import AddSensor from "views/Sensor/AddSensor";
+import UpdateSensor from "views/Sensor/UpdateSensor";
+import Sensor from "views/Sensor/Sensor";
+
 import Alerts from "views/Alerts";
 import SensorReadings from "views/SensorReadings";
 
@@ -36,17 +47,20 @@ const MainRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
 
-        <Route path="/machines" element={<Machines />} />
-        <Route path="/machines/add" element={<AddMachine />} />
-        <Route path="/machine/:id" element={<Machines />} />
-
         <Route path="/users" element={<Users />} />
         <Route path="/users/add" element={<AddUser />} />
-        <Route path="/users/:id" element={<Users />} />
+        <Route path="/user/update/:userId" element={<UpdateUser />} />
+        <Route path="/user/:userId" element={<User />} />
+
+        <Route path="/machines" element={<Machines />} />
+        <Route path="/machines/add" element={<AddMachine />} />
+        <Route path="/machine/update/:machineId" element={<UpdateMachine />} />
+        <Route path="/machine/:machineId" element={<Machine />} />
 
         <Route path="/sensors" element={<Sensors />} />
         <Route path="/sensors/add" element={<AddSensor />} />
-        <Route path="/sensor/:id" element={<Sensors />} />
+        <Route path="/sensor/update/:sensorId" element={<UpdateSensor />} />
+        <Route path="/sensor/:sensorId" element={<Sensor />} />
 
         <Route path="/readings" element={<SensorReadings />} />
         <Route path="/alerts" element={<Alerts />} />
