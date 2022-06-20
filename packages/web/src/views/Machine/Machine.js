@@ -34,7 +34,7 @@ const Machine = () => {
         console.log(res.data.data);
       }
     } catch (err) {
-      console.log("Unable to get user");
+      console.log("Unable to get machine");
     }
   };
 
