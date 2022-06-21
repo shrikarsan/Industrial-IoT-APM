@@ -13,6 +13,7 @@ import Dashboard from "views/Dashboard";
 
 import Login from "views/Login";
 import ForgotPassword from "views/ForgotPassword";
+import ResetPassword from "views/ResetPassword";
 
 import Users from "views/User/Users";
 import AddUser from "views/User/AddUser";
@@ -49,6 +50,7 @@ const MainRouter = () => {
 
         <Route path="/login" element={<Login />} />
         <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/reset" element={<ResetPassword />} />
 
         <Route path="/dashboard" element={<Dashboard />} />
 

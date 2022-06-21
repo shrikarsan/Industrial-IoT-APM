@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -15,25 +15,27 @@ import {
 
 import client from "api/client";
 
-const ForgotPassword = () => {
-  const [success, setSuccess] = useState();
+const ResetPassword = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [error, setError] = useState(false);
 
-  const sendResetRequest = async (values, formikActions) => {
+  const sendResetPassword = async (values, formikActions) => {
     try {
-      const res = await client.post("/requestResetPassword", {
-        ...values,
+      const res = await client.post("/resetPassword", {
+        password: values.password,
+        token: searchParams.get("token"),
+        userId: searchParams.get("id"),
       });
-
-      if (res.data.success) {
-        setSuccess(true);
-        console.log(res.data);
-        console.log(res.data.link);
+      if (res.data) {
         formikActions.resetForm();
+        navigate("/login");
       } else {
-        setSuccess(false);
+        setError(true);
         formikActions.setSubmitting(false);
         formikActions.setErrors({
-          email: "Invalid email",
+          password: "Token is expired or invalid",
+          confirmPassword: "Token is expired or invalid",
         });
       }
     } catch (error) {
@@ -43,15 +45,21 @@ const ForgotPassword = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "",
+      password: "",
+      confirmPassword: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Must be a valid email")
-        .required("Email is required"),
+      password: Yup.string()
+        .trim()
+        .min(8, "Password is too short!")
+        .required("Password is required!"),
+      confirmPassword: Yup.string().equals(
+        [Yup.ref("password"), null],
+        "Password does not match!"
+      ),
     }),
     onSubmit: (values, formikActions) => {
-      sendResetRequest(values, formikActions);
+      sendResetPassword(values, formikActions);
     },
   });
 
@@ -80,22 +88,11 @@ const ForgotPassword = () => {
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 5 }}>
               <Stack sx={{ width: "100%" }} spacing={2}>
-                {success && (
-                  <>
-                    <Alert severity="info">
-                      <AlertTitle>Success</AlertTitle>
-                      Reset password link sent successfully
-                      <br />
-                      <strong>check it out!</strong>
-                    </Alert>
-                    <br />
-                  </>
-                )}
-                {success === false && (
+                {error && (
                   <>
                     <Alert severity="error">
                       <AlertTitle>Error</AlertTitle>
-                      <strong> Invalid E-mail !!! </strong>
+                      <strong>Token is expired or invalid</strong>
                     </Alert>
                     <br />
                   </>
@@ -105,26 +102,44 @@ const ForgotPassword = () => {
                 color="textPrimary"
                 variant="h4"
                 align="center"
-                // fontFamily="Poppins"
                 sx={{ fontWeight: "bold" }}
               >
-                Forgot Password
+                Reset Password
               </Typography>
             </Box>
 
             <TextField
-              error={Boolean(formik.touched.email && formik.errors.email)}
-              fullWidth
-              helperText={formik.touched.email && formik.errors.email}
-              label="Email Address"
+              error={Boolean(formik.touched.password && formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              label="Password *"
               margin="normal"
-              name="email"
+              name="password"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="email"
-              value={formik.values.email}
+              type="password"
+              value={formik.values.password}
               variant="outlined"
+              fullWidth
             />
+            <br />
+            <TextField
+              error={Boolean(
+                formik.touched.confirmPassword && formik.errors.confirmPassword
+              )}
+              helperText={
+                formik.touched.confirmPassword && formik.errors.confirmPassword
+              }
+              label="Confirm Password *"
+              margin="normal"
+              name="confirmPassword"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="password"
+              value={formik.values.confirmPassword}
+              variant="outlined"
+              fullWidth
+            />
+            <br />
 
             <Box
               sx={{ py: 5 }}
@@ -151,4 +166,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;
