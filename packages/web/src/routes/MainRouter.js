@@ -9,8 +9,10 @@ import { useLogin } from "context/Login";
 
 // import Sample from "views/Sample";
 
-import Login from "views/Login";
 import Dashboard from "views/Dashboard";
+
+import Login from "views/Login";
+import ForgotPassword from "views/ForgotPassword";
 
 import Users from "views/User/Users";
 import AddUser from "views/User/AddUser";
@@ -44,7 +46,10 @@ const MainRouter = () => {
     <Router>
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
+
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
+
         <Route path="/dashboard" element={<Dashboard />} />
 
         <Route path="/users" element={<Users />} />

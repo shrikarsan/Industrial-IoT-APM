@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -7,35 +8,35 @@ import {
   Container,
   TextField,
   Typography,
-  Link,
   Alert,
+  Stack,
+  AlertTitle,
 } from "@mui/material";
 
 import { useLogin } from "context/Login";
 import client from "api/client";
 
-const Login = () => {
+const ForgotPassword = () => {
   const { setIsLoggedIn, setProfile } = useLogin();
   const navigate = useNavigate();
+  const [success, setSuccess] = useState();
 
-  const loginUser = async (values, formikActions) => {
+  const sendResetRequest = async (values, formikActions) => {
     try {
-      const res = await client.post("/login", {
+      const res = await client.post("/requestResetPassword", {
         ...values,
       });
 
       if (res.data.success) {
-        setProfile(res.data.user);
-        setIsLoggedIn(true);
-        localStorage.setItem("user", JSON.stringify(res.data.user));
+        setSuccess(true);
         console.log(res.data);
+        console.log(res.data.link);
         formikActions.resetForm();
-        navigate("/dashboard");
       } else {
+        setSuccess(false);
         formikActions.setSubmitting(false);
         formikActions.setErrors({
-          email: "Invalid email or password",
-          password: "Invalid email or password",
+          email: "Invalid email",
         });
       }
     } catch (error) {
@@ -46,18 +47,14 @@ const Login = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Must be a valid email")
         .required("Email is required"),
-      password: Yup.string()
-        .min(8, "Should contain at least 8 characters")
-        .required("Password is required"),
     }),
     onSubmit: (values, formikActions) => {
-      loginUser(values, formikActions);
+      sendResetRequest(values, formikActions);
     },
   });
 
@@ -85,6 +82,28 @@ const Login = () => {
         >
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 5 }}>
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                {success && (
+                  <>
+                    <Alert severity="info">
+                      <AlertTitle>Success</AlertTitle>
+                      Reset password link sent successfully
+                      <br />
+                      <strong>check it out!</strong>
+                    </Alert>
+                    <br />
+                  </>
+                )}
+                {success === false && (
+                  <>
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      <strong> Invalid E-mail !!! </strong>
+                    </Alert>
+                    <br />
+                  </>
+                )}
+              </Stack>
               <Typography
                 color="textPrimary"
                 variant="h4"
@@ -92,7 +111,7 @@ const Login = () => {
                 // fontFamily="Poppins"
                 sx={{ fontWeight: "bold" }}
               >
-                Login
+                Forgot Password
               </Typography>
             </Box>
 
@@ -109,30 +128,7 @@ const Login = () => {
               value={formik.values.email}
               variant="outlined"
             />
-            <TextField
-              error={Boolean(formik.touched.password && formik.errors.password)}
-              fullWidth
-              helperText={formik.touched.password && formik.errors.password}
-              label="Password"
-              margin="normal"
-              name="password"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="password"
-              value={formik.values.password}
-              variant="outlined"
-            />
-            <br />
-            <Box
-              sx={{ py: 1 }}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Link href="/forgot" sx={{ textDecoration: "none" }}>
-                Forgot Password?
-              </Link>
-            </Box>
+
             <Box
               sx={{ py: 5 }}
               display="flex"
@@ -148,7 +144,7 @@ const Login = () => {
                 type="submit"
                 variant="contained"
               >
-                Login
+                Submit
               </Button>
             </Box>
           </form>
@@ -158,4 +154,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;

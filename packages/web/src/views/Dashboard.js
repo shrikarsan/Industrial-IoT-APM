@@ -73,13 +73,13 @@ const Dashboard = () => {
               <GroupRoundedIcon /> &nbsp; Users - {allUsers && allUsers.count}
             </InfoCard>
           </Grid>
-          <Grid item xs={2} sm={4} md={4} key={1}>
+          <Grid item xs={2} sm={4} md={4} key={2}>
             <InfoCard>
               <PrecisionManufacturingRoundedIcon /> &nbsp; Machines -{" "}
               {allMachines && allMachines.count}
             </InfoCard>
           </Grid>
-          <Grid item xs={2} sm={4} md={4} key={1}>
+          <Grid item xs={2} sm={4} md={4} key={3}>
             <InfoCard>
               <SensorsRoundedIcon /> &nbsp; Sensors -{" "}
               {allSensors && allSensors.count}
