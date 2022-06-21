@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -11,6 +12,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 
 export default function Header(props) {
+  const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -38,13 +40,16 @@ export default function Header(props) {
           >
             {props.title}
           </Typography>
-          {/* <Button
+          <Button
             variant="contained"
-            href="login"
+            onClick={() => {
+              localStorage.removeItem("user");
+              navigate("/login");
+            }}
             sx={{ backgroundColor: "#0466c8", textTransform: "none" }}
           >
-            Login
-          </Button> */}
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
