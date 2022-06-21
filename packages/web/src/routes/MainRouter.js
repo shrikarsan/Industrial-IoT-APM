@@ -11,9 +11,9 @@ import { useLogin } from "context/Login";
 
 import Dashboard from "views/Dashboard";
 
-import Login from "views/Login";
-import ForgotPassword from "views/ForgotPassword";
-import ResetPassword from "views/ResetPassword";
+import Login from "views/Auth/Login";
+import ForgotPassword from "views/Auth/ForgotPassword";
+import ResetPassword from "views/Auth/ResetPassword";
 
 import Users from "views/User/Users";
 import AddUser from "views/User/AddUser";
