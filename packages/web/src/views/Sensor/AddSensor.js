@@ -39,6 +39,14 @@ const AddSensor = () => {
       name: Yup.string().required("Name is required"),
       type: Yup.string().required("Type is required"),
       unit: Yup.string().required("Unit is required"),
+      // upperThresholdValue: Yup.number().min(
+      //   Yup.ref("lowerThresholdValue"),
+      //   "Upper Threshold cannot be less than Lower Threshold"
+      // ),
+      // lowerThresholdValue: Yup.number().max(
+      //   Yup.ref("upperThresholdValue"),
+      //   "Lower Threshold cannot be greater than Upper Threshold"
+      // ),
       machineId: Yup.string().required("Machine id is required"),
     }),
     onSubmit: (values, formikActions) => {

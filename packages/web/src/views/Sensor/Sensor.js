@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import {
   Button,
@@ -13,11 +13,13 @@ import {
 } from "@mui/material";
 
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import Layout from "components/Layout";
 import client from "api/client";
 
 const Sensor = () => {
+  const navigate = useNavigate();
   const { sensorId } = useParams();
   const [sensor, setSensor] = useState();
 
@@ -35,6 +37,18 @@ const Sensor = () => {
       }
     } catch (err) {
       console.log("Unable to get sensor");
+    }
+  };
+
+  const handleDelete = async () => {
+    const res = await client.post("/delete-sensor", {
+      id: sensorId,
+    });
+    if (res.data.success) {
+      console.log(res.data.message);
+      navigate("/sensors");
+    } else {
+      console.log("Delete not successful");
     }
   };
 
@@ -57,7 +71,7 @@ const Sensor = () => {
 
   return (
     <Layout title="Sensor">
-      <Typography sx={{ fontWeight: "bold" }}>Machine Information</Typography>
+      <Typography sx={{ fontWeight: "bold" }}>Sensor Information</Typography>
       <br />
       {sensor && (
         <>
@@ -92,6 +106,17 @@ const Sensor = () => {
             sx={{ backgroundColor: "#0466c8" }}
           >
             Update sensor
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              window.confirm("Are you sure you want to delete this sensor?") &&
+                handleDelete();
+            }}
+            endIcon={<DeleteRoundedIcon />}
+            sx={{ backgroundColor: "#ef233c", margin: 1 }}
+          >
+            Delete Sensor
           </Button>
         </>
       )}

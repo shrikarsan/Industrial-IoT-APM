@@ -97,3 +97,25 @@ exports.updateSensor = async (req, res, next) => {
     });
   }
 };
+
+exports.deleteSensor = async (req, res, next) => {
+  try {
+    const machineId = await Sensor.findOne({ id: req.body.id }).machineId;
+    await Machine.findOneAndUpdate(
+      { id: machineId },
+      { $inc: { noOfSensors: -1 } }
+    );
+
+    await Sensor.deleteOne({ id: req.body.id });
+
+    res.status(200).json({
+      success: true,
+      message: "Deleted successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
