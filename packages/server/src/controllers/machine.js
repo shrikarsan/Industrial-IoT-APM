@@ -120,3 +120,19 @@ exports.updateMachine = async (req, res, next) => {
     });
   }
 };
+
+exports.deleteMachine = async (req, res, next) => {
+  try {
+    const machine = await Machine.deleteOne({ id: req.body.id });
+
+    return res.status(200).json({
+      success: true,
+      message: "Deleted successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};

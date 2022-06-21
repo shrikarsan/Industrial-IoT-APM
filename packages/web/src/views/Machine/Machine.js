@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import {
   Button,
@@ -13,11 +13,13 @@ import {
 } from "@mui/material";
 
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import Layout from "components/Layout";
 import client from "api/client";
 
 const Machine = () => {
+  const navigate = useNavigate();
   const { machineId } = useParams();
   const [machine, setMachine] = useState();
 
@@ -35,6 +37,18 @@ const Machine = () => {
       }
     } catch (err) {
       console.log("Unable to get machine");
+    }
+  };
+
+  const handleDelete = async () => {
+    const res = await client.post("/delete-machine", {
+      id: machineId,
+    });
+    if (res.data.success) {
+      console.log(res.data.message);
+      navigate("/machines");
+    } else {
+      console.log("Delete not successful");
     }
   };
 
@@ -97,6 +111,18 @@ const Machine = () => {
             sx={{ backgroundColor: "#0466c8" }}
           >
             Update Machine
+          </Button>
+
+          <Button
+            variant="contained"
+            onClick={() => {
+              window.confirm("Are you sure you want to delete this machine?") &&
+                handleDelete();
+            }}
+            endIcon={<DeleteRoundedIcon />}
+            sx={{ backgroundColor: "#ef233c", margin: 1 }}
+          >
+            Delete Machine
           </Button>
         </>
       )}
