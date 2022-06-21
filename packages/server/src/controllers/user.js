@@ -176,3 +176,19 @@ exports.updateUser = async (req, res, next) => {
     });
   }
 };
+
+exports.deleteUser = async (req, res, next) => {
+  try {
+    const user = await User.deleteOne({ id: req.body.id });
+
+    return res.status(200).json({
+      success: true,
+      message: "Deleted successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
