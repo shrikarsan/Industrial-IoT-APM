@@ -5,12 +5,21 @@ const User = require("../models/user");
 exports.createUser = async (req, res) => {
   const { id, firstName, lastName, email, password, role, managedBy } =
     req.body;
+
+  const isNewId = await User.isThisIdInUse(id);
+  if (!isNewId)
+    return res.json({
+      success: false,
+      message: "This id is already taken",
+    });
+
   const isNewUser = await User.isThisEmailInUse(email);
   if (!isNewUser)
     return res.json({
       success: false,
       message: "This email is already in use, try login",
     });
+
   const user = await User({
     id,
     firstName,

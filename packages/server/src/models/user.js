@@ -81,4 +81,17 @@ userSchema.statics.isThisEmailInUse = async function (email) {
   }
 };
 
+userSchema.statics.isThisIdInUse = async function (id) {
+  if (!id) throw new Error("Invalid Id");
+  try {
+    const user = await this.findOne({ id });
+    if (user) return false;
+
+    return true;
+  } catch (error) {
+    console.log("error inside isThisIdInUse method", error.message);
+    return false;
+  }
+};
+
 module.exports = mongoose.model("User", userSchema);
