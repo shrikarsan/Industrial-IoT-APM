@@ -1,13 +1,12 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import client from '../api/client';
 import {useLogin} from '../context/LoginProvider';
 import {isValidEmail, isValidObjField, updateError} from '../utils/methods';
-//import CheckBox from '@react-native-community/checkbox';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import COLORS from '../components/colors';
 import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/CustomInput';
-import {useNavigation} from '@react-navigation/native';
 
 const Login = () => {
   const {setIsLoggedIn} = useLogin();
@@ -17,21 +16,20 @@ const Login = () => {
   });
 
   const [error, setError] = useState('');
-  //const [isSelected, setSelection] = useState(false);
   const {email, password} = userInfo;
 
-  const handleOnChangeText = (value, fieldName) => {
-    setUserInfo({...userInfo, [fieldName]: value});
-  };
-
   const isValidForm = () => {
-    if (!isValidObjField(userInfo))
+    if (!isValidObjField(userInfo)) {
       return updateError('Required all fields!', setError);
+    }
 
-    if (!isValidEmail(email)) return updateError('Invalid email!', setError);
+    if (!isValidEmail(email)) {
+      return updateError('Invalid email!', setError);
+    }
 
-    if (!password.trim() || password.length < 8)
+    if (!password.trim() || password.length < 8) {
       return updateError('Password is invalid ', setError);
+    }
 
     return true;
   };
@@ -43,23 +41,16 @@ const Login = () => {
 
         if (res.data.success) {
           setUserInfo({email: '', password: ''});
-          // setProfile(res.data.user);
           setIsLoggedIn(true);
         } else {
           updateError(res.data.message, setError);
         }
 
         console.log(res.data);
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
       }
     }
-  };
-
-  const navigation = useNavigation();
-
-  const onForgotPasswordPressed = () => {
-    navigation.navigate('OTP');
   };
 
   return (
@@ -112,7 +103,6 @@ const Login = () => {
         <View style={styles.checkboxContainer}></View>
       </View>
       <View style={{marginTop: 20}}>
-        {/* <CustomButton text="Sign In" onPress={onSignInPressed} /> */}
         <CustomButton text="Sign In" onPress={submitForm} />
       </View>
     </ScrollView>

@@ -3,6 +3,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Sample from '../views/Sample';
 import Login from '../views/Login';
+import Alerts from '../views/Alerts';
+import Status from '../views/Status';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useLogin} from '../context/LoginProvider';
@@ -11,9 +13,21 @@ const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Sample} />
-      <Tab.Screen name="Settings" component={Sample} />
+    <Tab.Navigator
+      screenOptions={{tabBarIconStyle: {display: 'none'}}}
+      tabBarOptions={{
+        labelStyle: {
+          fontSize: 14,
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          textAlignVertical: 'center',
+        },
+      }}>
+      <Tab.Screen name="Alerts" component={Alerts} />
+      <Tab.Screen name="Status" component={Status} />
     </Tab.Navigator>
   );
 }
