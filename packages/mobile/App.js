@@ -7,6 +7,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import LoginProvider from './src/context/LoginProvider';
 
 import Navigation from './src/navigation';
 
@@ -20,9 +21,11 @@ const theme = {
 const App = () => {
   return (
     <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <Navigation />
-      </NavigationContainer>
+      <LoginProvider>
+        <NavigationContainer>
+          <Navigation />
+        </NavigationContainer>
+      </LoginProvider>
     </PaperProvider>
   );
 };

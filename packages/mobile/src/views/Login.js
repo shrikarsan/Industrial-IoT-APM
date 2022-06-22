@@ -1,62 +1,145 @@
-import React from 'react';
-import {TextInput, Button, Text, Headline} from 'react-native-paper';
-import {View, StyleSheet} from 'react-native';
-
-// TODO Fix styles
+import React, {useState} from 'react';
+import client from '../api/client';
+import {useLogin} from '../context/LoginProvider';
+import {isValidEmail, isValidObjField, updateError} from '../utils/methods';
+//import CheckBox from '@react-native-community/checkbox';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import COLORS from '../components/colors';
+import CustomButton from '../components/CustomButton';
+import CustomInput from '../components/CustomInput';
+import {useNavigation} from '@react-navigation/native';
 
 const Login = () => {
-  const [text, setText] = React.useState('');
+  const {setIsLoggedIn} = useLogin();
+  const [userInfo, setUserInfo] = useState({
+    email: '',
+    password: '',
+  });
+
+  const [error, setError] = useState('');
+  //const [isSelected, setSelection] = useState(false);
+  const {email, password} = userInfo;
+
+  const handleOnChangeText = (value, fieldName) => {
+    setUserInfo({...userInfo, [fieldName]: value});
+  };
+
+  const isValidForm = () => {
+    if (!isValidObjField(userInfo))
+      return updateError('Required all fields!', setError);
+
+    if (!isValidEmail(email)) return updateError('Invalid email!', setError);
+
+    if (!password.trim() || password.length < 8)
+      return updateError('Password is invalid ', setError);
+
+    return true;
+  };
+
+  const submitForm = async () => {
+    if (isValidForm()) {
+      try {
+        const res = await client.post('/login', {...userInfo});
+
+        if (res.data.success) {
+          setUserInfo({email: '', password: ''});
+          // setProfile(res.data.user);
+          setIsLoggedIn(true);
+        } else {
+          updateError(res.data.message, setError);
+        }
+
+        console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const navigation = useNavigation();
+
+  const onForgotPasswordPressed = () => {
+    navigation.navigate('OTP');
+  };
 
   return (
-    <View style={styles.root}>
-      <Headline style={styles.text}>Login</Headline>
-      <View style={styles.container}>
-        <TextInput
-          label="Email"
-          mode="outlined"
-          value={text}
-          onChangeText={text => setText(text)}
-          contentStyle={styles.input}
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={{marginTop: 160}}>
+        <Text
+          style={{
+            fontFamily: 'Poppins',
+            fontSize: 29,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: COLORS.dark,
+          }}>
+          Welcome!
+        </Text>
+        <Text
+          style={{
+            fontFamily: 'Poppins',
+            fontSize: 17,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: COLORS.light,
+          }}>
+          Sign in to your account to continue
+        </Text>
+      </View>
+
+      <View style={styles.root}>
+        {error ? (
+          <Text style={{color: 'red', fontSize: 18, textAlign: 'center'}}>
+            {error}
+          </Text>
+        ) : null}
+        <CustomInput
+          placeholder="Email"
+          value={email}
+          autoCapitalize="none"
+          setValue={value =>
+            setUserInfo({...userInfo, email: value.toLowerCase()})
+          }
+        />
+        <CustomInput
+          placeholder="Password"
+          value={password}
+          setValue={value => setUserInfo({...userInfo, password: value})}
+          secureTextEntry
         />
       </View>
       <View style={styles.container}>
-        <TextInput
-          label="Password"
-          mode="outlined"
-          value={text}
-          onChangeText={text => setText(text)}
-          contentStyle={styles.input}
-        />
+        <View style={styles.checkboxContainer}></View>
       </View>
-      <Button
-        mode="contained"
-        onPress={() => console.log('Pressed')}
-        contentStyle={styles.button}>
-        Press me
-      </Button>
-    </View>
+      <View style={{marginTop: 20}}>
+        {/* <CustomButton text="Sign In" onPress={onSignInPressed} /> */}
+        <CustomButton text="Sign In" onPress={submitForm} />
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   root: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    padding: 10,
+    alignItems: 'center',
+    padding: 20,
   },
+
   container: {
-    padding: 10,
+    flex: 1,
+    alignItems: 'flex-start',
+    marginLeft: 25,
+    justifyContent: 'center',
   },
-  text: {
-    // margin: 10,
-    textAlign: 'center',
+  checkboxContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
   },
-  input: {
-    margin: 10,
-    width: '100%',
+  checkbox: {
+    alignSelf: 'center',
   },
-  button: {
-    height: 60,
+  label: {
+    margin: 8,
   },
 });
 
